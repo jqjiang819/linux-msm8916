@@ -1,0 +1,57 @@
+// SPDX-License-Identifier: GPL-2.0-only
+
+/dts-v1/;
+
+#include "msm8916-ufi.dtsi"
+
+/ {
+	model = "UFI LDW923/LWD924 4G Modem Stick";
+	compatible = "ufi,ldw924", "qcom,msm8916";
+};
+
+&button_restart {
+	gpios = <&msmgpio 20 GPIO_ACTIVE_HIGH>;
+};
+
+&led_r {
+	gpios = <&msmgpio 14 GPIO_ACTIVE_LOW>;
+    default-state = "off";
+	function = LED_FUNCTION_DISK_ACTIVITY;
+};
+
+&led_g {
+	gpios = <&msmgpio 16 GPIO_ACTIVE_LOW>;
+    default-state = "off";
+	function = LED_FUNCTION_WAN;
+};
+
+&led_b {
+	gpios = <&msmgpio 17 GPIO_ACTIVE_LOW>;
+    default-state = "on";
+	function = LED_FUNCTION_POWER;
+};
+
+&mpss {
+	pinctrl-0 = <&sim_ctrl_default>;
+	pinctrl-names = "default";
+};
+
+&button_default {
+	pins = "gpio20";
+	bias-pull-down;
+};
+
+&gpio_leds_default {
+	pins = "gpio14", "gpio16", "gpio17";
+};
+
+/* This selects the external SIM card slot by default */
+&msmgpio {
+	sim_ctrl_default: sim-ctrl-default-state {
+		sim-sel-pin {
+			pins = "gpio85";
+			bias-disable;
+			output-low;
+		};
+	};
+};
